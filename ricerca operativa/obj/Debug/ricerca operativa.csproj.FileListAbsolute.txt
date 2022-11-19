@@ -1,0 +1,23 @@
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\bin\Debug\ricerca operativa.exe.config
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\bin\Debug\ricerca operativa.exe
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\bin\Debug\ricerca operativa.pdb
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.AssemblyReference.cache
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.SuggestedBindingRedirects.cache
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca_operativa.Form1.resources
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca_operativa.Properties.Resources.resources
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.GenerateResource.cache
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.CoreCompileInputs.cache
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.exe
+C:\Users\cattaneo.18377\Desktop\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.pdb
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\bin\Debug\ricerca operativa.exe.config
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\bin\Debug\ricerca operativa.exe
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\bin\Debug\ricerca operativa.pdb
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.AssemblyReference.cache
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.SuggestedBindingRedirects.cache
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca_operativa.Form1.resources
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca_operativa.Properties.Resources.resources
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.GenerateResource.cache
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.csproj.CoreCompileInputs.cache
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.exe
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca operativa.pdb
+C:\Users\miky7\OneDrive\Desktop\simone\scuola\Quinta\Gestione Progetto\ricerca operativa\ricerca operativa\obj\Debug\ricerca_operativa.Form2.resources
