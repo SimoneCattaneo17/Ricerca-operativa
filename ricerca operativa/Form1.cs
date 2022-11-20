@@ -66,12 +66,12 @@ namespace ricerca_operativa {
         }
 
         private void crea() {
-            if (numericUpDown_produttori.Value > 1 && numericUpDown_consumatori.Value > 1) {
+            if (flatNumericUpDown1.Value > 1 && flatNumericUpDown2.Value > 1) {
 
                 Tabella.Rows.Clear();
                 Tabella.Columns.Clear();
 
-                for (int i = 0; i <= numericUpDown_consumatori.Value; i++) {
+                for (int i = 0; i <= flatNumericUpDown2.Value; i++) {
                     if (i != 0) {
                         Tabella.Columns.Add("D" + i, "D" + i);
                     }
@@ -80,7 +80,7 @@ namespace ricerca_operativa {
                     }
                 }
 
-                for (int i = 0; i < numericUpDown_produttori.Value; i++) {
+                for (int i = 0; i < flatNumericUpDown1.Value; i++) {
                     Tabella.Rows.Add("UP" + (i + 1));
                 }
 

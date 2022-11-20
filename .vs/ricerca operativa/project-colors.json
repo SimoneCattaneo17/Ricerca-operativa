@@ -5,6 +5,11 @@
       "ProjectGuid": "bc407be9-a2ad-49f8-b4c7-4785ddbd56cc",
       "DisplayName": "ricerca operativa",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "File esterni",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1
