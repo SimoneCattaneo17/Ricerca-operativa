@@ -30,12 +30,13 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackColor = System.Drawing.Color.Coral;
             this.button1.Location = new System.Drawing.Point(242, 415);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lista
@@ -43,6 +44,7 @@
             this.lista.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lista.BackColor = System.Drawing.Color.LightSalmon;
             this.lista.FormattingEnabled = true;
             this.lista.ItemHeight = 16;
             this.lista.Location = new System.Drawing.Point(12, 12);
@@ -54,10 +56,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.Color.Tan;
             this.ClientSize = new System.Drawing.Size(329, 450);
             this.Controls.Add(this.lista);
             this.Controls.Add(this.button1);
+            this.MinimumSize = new System.Drawing.Size(347, 497);
             this.Name = "Form2";
             this.Text = "Resoconto";
             this.Load += new System.EventHandler(this.Form2_Load);

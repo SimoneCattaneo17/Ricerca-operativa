@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
+
 namespace ricerca_operativa {
     public partial class Form1 : Form {
+        private bool msg = false;
 
         public Form1() {
             InitializeComponent();
@@ -92,6 +94,8 @@ namespace ricerca_operativa {
                 }
 
                 Tabella.Columns[0].ReadOnly = true;
+
+                this.Tabella.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
             else {
                 MessageBox.Show("Il numero dei produttori e dei consumatori deve essere maggiore di 1", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -114,7 +118,12 @@ namespace ricerca_operativa {
 
                 //inserisce nell'ultima riga
                 for (int i = 1; i < Tabella.Columns.Count - 1; i++) {
-                    Tabella.Rows[Tabella.Rows.Count - 1].Cells[i].Value = rnd.Next(1, 256);
+                    if (Tabella.Columns.Count > 20 || Tabella.Rows.Count > 20) {
+                        Tabella.Rows[Tabella.Rows.Count - 1].Cells[i].Value = rnd.Next(128, 512);
+                    }
+                    else {
+                        Tabella.Rows[Tabella.Rows.Count - 1].Cells[i].Value = rnd.Next(1, 256);
+                    }
                 }
 
                 //somma i valori nell'ultima riga
@@ -125,6 +134,9 @@ namespace ricerca_operativa {
                 Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = sum;
 
                 //inserisce nell'ultima colonna
+
+                //fa cagare, usare una media e poi mettere valori tra la media e media+50%
+                /*
                 int n = 0;
                 int m = Tabella.Rows.Count - 1;
                 for (int i = 0; i < Tabella.Rows.Count - 1; i++) {
@@ -133,7 +145,7 @@ namespace ricerca_operativa {
                     }
                     else {
                         if (n > m / 2) {
-                            temp = rnd.Next(1, sum / 2);
+                            temp = rnd.Next(1, sum / 4);
                             Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = temp;
                             sum -= temp;
                         }
@@ -142,6 +154,28 @@ namespace ricerca_operativa {
                             Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = temp;
                             sum -= temp;
                         }
+                    }
+                    n++;
+                }
+                */
+
+                //non ancora finito, controllare il valore per cui si moltiplica la media
+                int media = (sum / Tabella.Rows.Count) / 2;
+                int n = 0;
+                int m = Tabella.Rows.Count - 1;
+                for (int i = 0; i < Tabella.Rows.Count - 1; i++) {
+                    if (i == Tabella.Rows.Count - 2) {
+                        Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = sum;
+                    }
+                    else {
+                        if (n > m / 1.5) {
+                            temp = rnd.Next(media / 2, media * 4);
+                        }
+                        else {
+                            temp = rnd.Next(media / 2, media * 3);
+                        }
+                        Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = temp;
+                        sum -= temp;
                     }
                     n++;
                 }
@@ -163,16 +197,22 @@ namespace ricerca_operativa {
         }
         private bool verificaCaselle() {
             bool a = true;
+            int x = 0;
             for (int i = 1; i < Tabella.Columns.Count - 1; i++) {
                 for (int j = 0; j < Tabella.Rows.Count - 1; j++) {
-                    if(Convert.ToString(Tabella[j, i].Value) == "") {
+                    try {
+                        x = Convert.ToInt32(Tabella.Rows[j].Cells[i].Value);
+                    }
+                    catch {
+                        Tabella.Rows[j].Cells[i].Value = "";
+                        msg = true;
                         a = false;
-                        Console.WriteLine("a");
+                        //break;
+                    }
+                    if (Convert.ToString(Tabella[j, i].Value) == "") {
+                        a = false;
                         break;
                     }
-                }
-                if(!a) {
-                    break;
                 }
             }
             return a;
@@ -186,7 +226,7 @@ namespace ricerca_operativa {
                     Form2 f2 = new Form2();
                     f2.Show();
                     int costo = 0;
-                    int a, b, c;
+                    int a = 0, b = 0, c = 0;
                     int q, p;
                     f2.aggiungi("Nord-Ovest:");
                     f2.aggiungi("");
@@ -197,7 +237,7 @@ namespace ricerca_operativa {
                         c = Convert.ToInt32(Tabella.Rows[0].Cells[1].Value);
                         if (a <= b) {
                             p = c;
-                            q = a;
+                            q = b;
                             costo += p * q;
 
                             if (a == b) {
@@ -211,7 +251,7 @@ namespace ricerca_operativa {
                         }
                         else {
                             p = c;
-                            q = b;
+                            q = a;
                             costo += p * q;
                             Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value = Convert.ToInt32(Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value) - Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value);
                             Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value) - Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value);
@@ -223,6 +263,8 @@ namespace ricerca_operativa {
                         Tabella.Update();
                         Tabella.Refresh();
                         f2.aggiorna();
+
+
                     }
                     f2.aggiungi("");
                     f2.aggiungi("Costo Finale: " + costo.ToString() + "€");
@@ -233,7 +275,12 @@ namespace ricerca_operativa {
                     //Tabella.Columns.RemoveAt(1);
                 }
                 else {
-                    MessageBox.Show("Errore, controllare la tabella in input", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (msg) {
+                        MessageBox.Show("Uno o più numeri inseriti sono troppo grandi", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else {
+                        MessageBox.Show("Errore, controllare la tabella in input", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -280,11 +327,9 @@ namespace ricerca_operativa {
 
 /*lista di cose da fare per il 6:
  * 
- * sistemare i numeric updown
+ * rivedere nord ovest, problemi con i costi
  * 
  * controllo per vedere se i numeri inseriti siano troppo grandi
- * 
- * form con il resoconto vedere se puo' andare bene cosi' o fare una tabella come quella nelle slide, se si fa la tabella probabilmente usare una classe aiuta
  *  
  */
 
