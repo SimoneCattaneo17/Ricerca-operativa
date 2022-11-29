@@ -68,7 +68,7 @@ namespace ricerca_operativa {
         }
 
         private void crea() {
-            if (flatNumericUpDown1.Value > 1 && flatNumericUpDown2.Value > 1) {
+            if (flatNumericUpDown1.Value > 1 && flatNumericUpDown2.Value > 1 && flatNumericUpDown1.Value < 51 && flatNumericUpDown2.Value < 51) {
 
                 Tabella.Rows.Clear();
                 Tabella.Columns.Clear();
@@ -98,7 +98,7 @@ namespace ricerca_operativa {
                 this.Tabella.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
             else {
-                MessageBox.Show("Il numero dei produttori e dei consumatori deve essere maggiore di 1", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Il numero dei produttori e dei consumatori deve essere maggiore di 1 e non più di 50", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -135,7 +135,6 @@ namespace ricerca_operativa {
 
                 //inserisce nell'ultima colonna
 
-                //fa cagare, usare una media e poi mettere valori tra la media e media+50%
                 /*
                 int n = 0;
                 int m = Tabella.Rows.Count - 1;
@@ -205,13 +204,10 @@ namespace ricerca_operativa {
                     }
                     catch {
                         Tabella.Rows[j].Cells[i].Value = "";
-                        msg = true;
                         a = false;
-                        //break;
                     }
-                    if (Convert.ToString(Tabella[j, i].Value) == "") {
+                    if (Convert.ToString(Tabella.Rows[j].Cells[i].Value) == "") {
                         a = false;
-                        break;
                     }
                 }
             }
@@ -232,9 +228,32 @@ namespace ricerca_operativa {
                     f2.aggiungi("");
 
                     while (Tabella.Rows.Count > 1) {
-                        b = Convert.ToInt32(Tabella[Tabella.Rows.Count - 1, 1].Value);
+                        b = Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value);
                         a = Convert.ToInt32(Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value);
                         c = Convert.ToInt32(Tabella.Rows[0].Cells[1].Value);
+
+                        p = c;
+                        if (a >= b) {
+                            q = b;
+                            if (a != b) {
+                                costo += c * b;
+                                Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value = a - b;
+                                Tabella.Columns.RemoveAt(1);
+                            }
+                            else {
+                                costo += c * b;
+                                Tabella.Columns.RemoveAt(1);
+                                Tabella.Rows.RemoveAt(0);
+                            }
+                        }
+                        else {
+                            q = a;
+                            costo += c * a;
+                            Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value = b - a;
+                            Tabella.Rows.RemoveAt(0);
+                        }
+
+                        /*
                         if (a <= b) {
                             p = c;
                             q = b;
@@ -257,30 +276,22 @@ namespace ricerca_operativa {
                             Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value) - Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value);
                             Tabella.Columns.RemoveAt(1);
                         }
+                        */
                         //capire se tenere o togliere u e €
                         f2.aggiungi(q.ToString() + "u * " + p.ToString() + "€ = " + (q * p).ToString() + "€");
                         Thread.Sleep(350);
                         Tabella.Update();
                         Tabella.Refresh();
                         f2.aggiorna();
-
-
                     }
                     f2.aggiungi("");
                     f2.aggiungi("Costo Finale: " + costo.ToString() + "€");
                     //scegliere se meglio i due clear o i due removeAt
                     Tabella.Rows.Clear();
                     Tabella.Columns.Clear();
-                    //Tabella.Rows.RemoveAt(0);
-                    //Tabella.Columns.RemoveAt(1);
                 }
                 else {
-                    if (msg) {
-                        MessageBox.Show("Uno o più numeri inseriti sono troppo grandi", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else {
-                        MessageBox.Show("Errore, controllare la tabella in input", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Una o più caselle contengono dati non corretti\n(Numeri troppo grandi o caselle vuote)", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -321,44 +332,8 @@ namespace ricerca_operativa {
     }
 }
 
-
-
-
-
-/*lista di cose da fare per il 6:
- * 
- * rivedere nord ovest, problemi con i costi
- * 
- * controllo per vedere se i numeri inseriti siano troppo grandi
- *  
- */
-
-
 /*lista di cose da fare in seguito:
  * 
- * capire se si possono avere dei puntatori a celle del datagridview
- * salvare in variabili i numeri inseriti per produttori e cosumatori e usare quei valori invece di tabella.rows.count e tabella.columns.count, cercare di non intaccare la leggibilita' del codice
  * metodo minimi costi
- * 
- */
-
-//non so cosa sia, nel dubbio lo lascio per ora
-/*
- * 
- *          for (int i = 1; i < Tabella.Columns.Count - 1; i++) {
-                sum += Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[i].Value);
-            }
-            Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = sum;
-
-            for (int i = 0; i < Tabella.Rows.Count - 1; i++) {
-                if(i == Tabella.Rows.Count - 2) {
-                    Tabella.Rows[i].Cells[Tabella.Rows.Count].Value = sum;
-                }
-                else {
-                    temp = rnd.Next(0, sum);
-                    Tabella.Rows[i].Cells[Tabella.Rows.Count].Value = temp;
-                    sum -= temp;
-                }
-            }
  * 
  */
