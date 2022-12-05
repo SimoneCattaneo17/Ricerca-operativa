@@ -12,8 +12,6 @@ using System.Threading;
 
 namespace ricerca_operativa {
     public partial class Form1 : Form {
-        private bool msg = false;
-
         public Form1() {
             InitializeComponent();
         }
@@ -116,7 +114,6 @@ namespace ricerca_operativa {
                     }
                 }
 
-                //inserisce nell'ultima riga
                 for (int i = 1; i < Tabella.Columns.Count - 1; i++) {
                     if (Tabella.Columns.Count > 20 || Tabella.Rows.Count > 20) {
                         Tabella.Rows[Tabella.Rows.Count - 1].Cells[i].Value = rnd.Next(128, 512);
@@ -126,39 +123,12 @@ namespace ricerca_operativa {
                     }
                 }
 
-                //somma i valori nell'ultima riga
                 for (int i = 1; i < Tabella.Columns.Count - 1; i++) {
                     sum += Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[i].Value);
                 }
 
                 Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = sum;
 
-                //inserisce nell'ultima colonna
-
-                /*
-                int n = 0;
-                int m = Tabella.Rows.Count - 1;
-                for (int i = 0; i < Tabella.Rows.Count - 1; i++) {
-                    if (i == Tabella.Rows.Count - 2) {
-                        Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = sum;
-                    }
-                    else {
-                        if (n > m / 2) {
-                            temp = rnd.Next(1, sum / 4);
-                            Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = temp;
-                            sum -= temp;
-                        }
-                        else {
-                            temp = rnd.Next(1, sum / 6);
-                            Tabella.Rows[i].Cells[Tabella.Columns.Count - 1].Value = temp;
-                            sum -= temp;
-                        }
-                    }
-                    n++;
-                }
-                */
-
-                //non ancora finito, controllare il valore per cui si moltiplica la media
                 int media = (sum / Tabella.Rows.Count) / 2;
                 int n = 0;
                 int m = Tabella.Rows.Count - 1;
@@ -252,31 +222,6 @@ namespace ricerca_operativa {
                             Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value = b - a;
                             Tabella.Rows.RemoveAt(0);
                         }
-
-                        /*
-                        if (a <= b) {
-                            p = c;
-                            q = b;
-                            costo += p * q;
-
-                            if (a == b) {
-                                Tabella.Columns.RemoveAt(1);
-                            }
-                            else {
-                                Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value = Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value) - Convert.ToInt32(Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value);
-                                Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value) - Convert.ToInt32(Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value);
-                            }
-                            Tabella.Rows.RemoveAt(0);
-                        }
-                        else {
-                            p = c;
-                            q = a;
-                            costo += p * q;
-                            Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value = Convert.ToInt32(Tabella.Rows[0].Cells[Tabella.Columns.Count - 1].Value) - Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value);
-                            Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value = Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[Tabella.Columns.Count - 1].Value) - Convert.ToInt32(Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value);
-                            Tabella.Columns.RemoveAt(1);
-                        }
-                        */
                         //capire se tenere o togliere u e €
                         f2.aggiungi(q.ToString() + "u * " + p.ToString() + "€ = " + (q * p).ToString() + "€");
                         Thread.Sleep(350);
@@ -286,7 +231,6 @@ namespace ricerca_operativa {
                     }
                     f2.aggiungi("");
                     f2.aggiungi("Costo Finale: " + costo.ToString() + "€");
-                    //scegliere se meglio i due clear o i due removeAt
                     Tabella.Rows.Clear();
                     Tabella.Columns.Clear();
                 }
@@ -302,7 +246,61 @@ namespace ricerca_operativa {
             }
             else {
                 if (verificaTotali() && verificaCaselle()) {
+                    Form2 f2 = new Form2();
+                    f2.Show();
 
+                    int costo = 0, up = 0, d = 0;
+                    int min, x = 0, y = 0;
+                    while (Tabella.Columns.Count > 2) {
+                        min = 2147483647; //valore massimo di un int32
+                        for (int i = 0; i < Tabella.Rows.Count - 1; i++) {
+                            for (int j = 1; j < Tabella.Columns.Count - 1; j++) {
+                                if (int.Parse(Tabella.Rows[i].Cells[j].Value.ToString()) < min) {
+                                    min = int.Parse(Tabella.Rows[i].Cells[j].Value.ToString());
+                                    x = j;
+                                    y = i;
+                                    d = int.Parse(Tabella[x, Tabella.Rows.Count - 1].Value.ToString());
+                                    up = int.Parse(Tabella[Tabella.Columns.Count - 1, y].Value.ToString());
+                                }
+                                else if (int.Parse(Tabella.Rows[i].Cells[j].Value.ToString()) == min) {
+                                    if (int.Parse(Tabella.Rows[Tabella.Rows.Count - 1].Cells[j].Value.ToString()) > int.Parse(Tabella.Rows[Tabella.Rows.Count - 2].Cells[x].Value.ToString())) {
+                                        min = int.Parse(Tabella.Rows[i].Cells[j].Value.ToString());
+                                        x = j;
+                                        y = i;
+                                        d = int.Parse(Tabella[x, Tabella.Rows.Count - 1].Value.ToString());
+                                        up = int.Parse(Tabella[Tabella.Columns.Count - 1, y].Value.ToString());
+                                    }
+                                }
+                            }
+                        }
+                        if (d > up) {
+                            costo += up * int.Parse(Tabella.Rows[y].Cells[x].Value.ToString());
+                            Tabella.Rows[Tabella.Rows.Count - 1].Cells[x].Value = d - up;
+                            Tabella.Rows[y].Cells[Tabella.Columns.Count - 1].Value = 0;
+                            f2.aggiungi(up + "u * " + int.Parse(Tabella.Rows[y].Cells[x].Value.ToString()) + "€" + " = " + up * int.Parse(Tabella.Rows[y].Cells[x].Value.ToString()) + "€");
+                            Tabella.Rows.RemoveAt(y);
+                        }
+                        else if (d == up) {
+                            costo += d * int.Parse(Tabella.Rows[y].Cells[x].Value.ToString());
+                            f2.aggiungi(d + "u * " + int.Parse(Tabella.Rows[y].Cells[x].Value.ToString()) + "€" + " = " + d * int.Parse(Tabella.Rows[y].Cells[x].Value.ToString()) + "€");
+                            Tabella.Rows.RemoveAt(y);
+                            Tabella.Columns.RemoveAt(x);
+                        }
+                        else {
+                            costo += d * int.Parse(Tabella.Rows[y].Cells[x].Value.ToString());
+                            f2.aggiungi(d + "u * " + int.Parse(Tabella.Rows[y].Cells[x].Value.ToString()) + "€" + " = " + d * int.Parse(Tabella.Rows[y].Cells[x].Value.ToString()) + "€");
+                            Tabella.Rows[y].Cells[Tabella.Columns.Count - 1].Value = up - d;
+                            Tabella.Columns.RemoveAt(x);
+                        }
+                        Thread.Sleep(350);
+                        Tabella.Update();
+                        Tabella.Refresh();
+                        f2.aggiorna();
+                    }
+                    f2.aggiungi("");
+                    f2.aggiungi("Costo Finale: " + costo);
+                    Tabella.Rows.Clear();
+                    Tabella.Columns.Clear();
                 }
                 else {
                     MessageBox.Show("Errore, controllare la tabella in input", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -331,9 +329,3 @@ namespace ricerca_operativa {
         }
     }
 }
-
-/*lista di cose da fare in seguito:
- * 
- * metodo minimi costi
- * 
- */
