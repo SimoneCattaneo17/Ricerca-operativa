@@ -222,7 +222,6 @@ namespace ricerca_operativa {
                             Tabella.Rows[Tabella.Rows.Count - 1].Cells[1].Value = b - a;
                             Tabella.Rows.RemoveAt(0);
                         }
-                        //capire se tenere o togliere u e €
                         f2.aggiungi(q.ToString() + "u * " + p.ToString() + "€ = " + (q * p).ToString() + "€");
                         Thread.Sleep(350);
                         Tabella.Update();
@@ -298,7 +297,7 @@ namespace ricerca_operativa {
                         f2.aggiorna();
                     }
                     f2.aggiungi("");
-                    f2.aggiungi("Costo Finale: " + costo);
+                    f2.aggiungi("Costo Finale: " + costo + "€");
                     Tabella.Rows.Clear();
                     Tabella.Columns.Clear();
                 }
